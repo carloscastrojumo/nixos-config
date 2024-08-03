@@ -69,6 +69,8 @@ in {
     "i3/config".text = builtins.readFile ./i3;
     "rofi/config.rasi".text = builtins.readFile ./rofi;
 
+    "starship/config.toml".text = builtins.readFile ./starship.toml;
+
     # tree-sitter parsers
     "nvim/parser/proto.so".source = "${pkgs.tree-sitter-proto}/parser";
     "nvim/queries/proto/folds.scm".source =
@@ -194,6 +196,24 @@ in {
     extraConfig = builtins.readFile ./kitty;
   };
 
+  programs.starship = {
+    enable = true;
+    enableFishIntegration = true;
+  };
+
+  programs.atuin = {
+    enable = true;
+    enableFishIntegration = true;
+    settings = {
+      search_mode = "fuzzy";
+      filter_mode_shell_up_key_binding = "session";
+      style = "compact";
+      show_preview = true;
+      exit_mode = "return-original";
+      secrets_filter = false;
+    };
+  };
+
   programs.i3status = {
     enable = true;
 
@@ -211,10 +231,10 @@ in {
     };
   };
 
-  programs.ghostty = {
-    enabled = true;
-    package = inputs.ghostty.${pkgs.system}.default;
-  };
+  # programs.ghostty = {
+  #   enabled = true;
+  #   package = inputs.ghostty.${pkgs.system}.default;
+  # };
 
   programs.neovim = {
     enable = true;

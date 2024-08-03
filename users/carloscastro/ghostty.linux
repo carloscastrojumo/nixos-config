@@ -1,10 +1,20 @@
-font-size = 12
 font-family = JetBrains Mono
+font-size = 13
+font-thicken = true
+
+theme = catppuccin-mocha
+
 background-opacity = 0.95
 background-blur-radius = 20
 macos-non-native-fullscreen = visible-menu
 macos-option-as-alt = left
 mouse-hide-while-typing = true
+
+background-blur-radius = 19
+
+shell-integration-features = no-cursor
+
+window-padding-x = 5
 
 # Keybinds to match macOS since this is a VM
 keybind = super+c=copy_to_clipboard
