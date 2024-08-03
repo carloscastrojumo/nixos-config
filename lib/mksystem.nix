@@ -6,22 +6,18 @@ name:
 {
   system,
   user,
-  darwin ? false,
-  wsl ? false
 }:
 
 let
-  # True if this is a WSL system.
-  isWSL = wsl;
 
   # The config files for this system.
   machineConfig = ../machines/${name}.nix;
-  userOSConfig = ../users/${user}/${if darwin then "darwin" else "nixos" }.nix;
+  userOSConfig = ../users/${user}/nixos.nix;
   userHMConfig = ../users/${user}/home-manager.nix;
 
-  # NixOS vs nix-darwin functionst
-  systemFunc = if darwin then inputs.darwin.lib.darwinSystem else nixpkgs.lib.nixosSystem;
-  home-manager = if darwin then inputs.home-manager.darwinModules else inputs.home-manager.nixosModules;
+  # NixOS
+  systemFunc = nixpkgs.lib.nixosSystem;
+  home-manager = inputs.home-manager.nixosModules;
 in systemFunc rec {
   inherit system;
 
@@ -31,16 +27,12 @@ in systemFunc rec {
     # the overlays are available globally.
     { nixpkgs.overlays = overlays; }
 
-    # Bring in WSL if this is a WSL build
-    (if isWSL then inputs.nixos-wsl.nixosModules.wsl else {})
-
     machineConfig
     userOSConfig
     home-manager.home-manager {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
       home-manager.users.${user} = import userHMConfig {
-        isWSL = isWSL;
         inputs = inputs;
       };
     }
@@ -52,7 +44,6 @@ in systemFunc rec {
         currentSystem = system;
         currentSystemName = name;
         currentSystemUser = user;
-        isWSL = isWSL;
         inputs = inputs;
       };
     }

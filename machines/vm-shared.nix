@@ -1,10 +1,7 @@
 { config, pkgs, lib, currentSystem, currentSystemName,... }:
 
 let
-  # Turn this to true to use gnome instead of i3. This is a bit
-  # of a hack, I just flip it on as I need to develop gnome stuff
-  # for now.
-  linuxGnome = true;
+  linuxGnome = false;
 in {
   # Be careful updating this.
   boot.kernelPackages = pkgs.linuxPackages_latest;
@@ -43,7 +40,7 @@ in {
   networking.hostName = "dev";
 
   # Set your time zone.
-  time.timeZone = "America/Los_Angeles";
+  time.timeZone = "Europe/Lisbon";
 
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
   # Per-interface useDHCP will be mandatory in the future, so this generated config
@@ -129,11 +126,12 @@ in {
     niv
     rxvt_unicode
     xclip
+    xorg.libxcvt
 
     # For hypervisors that support auto-resizing, this script forces it.
     # I've noticed not everyone listens to the udev events so this is a hack.
     (writeShellScriptBin "xrandr-auto" ''
-      xrandr --output Virtual-1 --auto
+      xrandr --output Virtual-1 --mode 2560x1600
     '')
   ] ++ lib.optionals (currentSystemName == "vm-aarch64") [
     # This is needed for the vmware user tools clipboard to work.

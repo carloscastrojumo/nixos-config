@@ -1,5 +1,5 @@
 {
-  description = "NixOS systems and tools by mitchellh";
+  description = "NixOS systems and tools";
 
   inputs = {
     # Pin our primary nixpkgs repository. This is the main nixpkgs repository
@@ -9,10 +9,6 @@
 
     # We use the unstable nixpkgs repo for some packages.
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-
-    # Build a custom WSL installer
-    nixos-wsl.url = "github:nix-community/NixOS-WSL";
-    nixos-wsl.inputs.nixpkgs.follows = "nixpkgs";
 
     home-manager = {
       url = "github:nix-community/home-manager/release-24.05";
@@ -38,6 +34,11 @@
     # Other packages
     zig.url = "github:mitchellh/zig-overlay";
 
+    ghostty = {
+      url = "git+ssh://git@github.com/ghostty-org/ghostty";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
     # Non-flakes
     nvim-cinnamon.url = "github:declancm/cinnamon.nvim";
     nvim-cinnamon.flake = false;
@@ -49,7 +50,7 @@
     vim-copilot.flake = false;
   };
 
-  outputs = { self, nixpkgs, home-manager, darwin, ... }@inputs: let
+  outputs = { self, nixpkgs, home-manager, darwin, ghostty, ... }@inputs: let
     # Overlays is the list of overlays we want to apply from flake inputs.
     overlays = [
       inputs.zig.overlays.default
@@ -61,34 +62,7 @@
   in {
     nixosConfigurations.vm-aarch64 = mkSystem "vm-aarch64" {
       system = "aarch64-linux";
-      user   = "mitchellh";
-    };
-
-    nixosConfigurations.vm-aarch64-prl = mkSystem "vm-aarch64-prl" rec {
-      system = "aarch64-linux";
-      user   = "mitchellh";
-    };
-
-    nixosConfigurations.vm-aarch64-utm = mkSystem "vm-aarch64-utm" rec {
-      system = "aarch64-linux";
-      user   = "mitchellh";
-    };
-
-    nixosConfigurations.vm-intel = mkSystem "vm-intel" rec {
-      system = "x86_64-linux";
-      user   = "mitchellh";
-    };
-
-    nixosConfigurations.wsl = mkSystem "wsl" {
-      system = "x86_64-linux";
-      user   = "mitchellh";
-      wsl    = true;
-    };
-
-    darwinConfigurations.macbook-pro-m1 = mkSystem "macbook-pro-m1" {
-      system = "aarch64-darwin";
-      user   = "mitchellh";
-      darwin = true;
+      user   = "carloscastro";
     };
   };
 }
