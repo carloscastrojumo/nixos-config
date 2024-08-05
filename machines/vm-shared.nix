@@ -67,12 +67,7 @@ in {
   };
 
   # setup windowing environment
-  services.xserver = if linuxGnome then {
-    enable = true;
-    xkb.layout = "us";
-    desktopManager.gnome.enable = true;
-    displayManager.gdm.enable = true;
-  } else {
+  services.xserver = {
     enable = true;
     xkb.layout = "us";
     dpi = 220;
@@ -90,6 +85,7 @@ in {
       # display resolution. This is a known issue with VMware Fusion.
       sessionCommands = ''
         ${pkgs.xorg.xset}/bin/xset r rate 200 40
+        ${pkgs.xorg.xrandr}/bin/xrandr -s 4096x2160
       '';
     };
 
