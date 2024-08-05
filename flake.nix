@@ -36,7 +36,6 @@
 
     ghostty = {
       url = "git+ssh://git@github.com/ghostty-org/ghostty";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     # Non-flakes

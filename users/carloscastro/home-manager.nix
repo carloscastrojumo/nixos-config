@@ -231,11 +231,6 @@ in {
     };
   };
 
-  # programs.ghostty = {
-  #   enabled = true;
-  #   package = inputs.ghostty.${pkgs.system}.default;
-  # };
-
   programs.neovim = {
     enable = true;
     package = inputs.neovim-nightly-overlay.packages.${pkgs.system}.default;
