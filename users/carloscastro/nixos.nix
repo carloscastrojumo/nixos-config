@@ -7,9 +7,9 @@
   # Add ~/.local/bin to PATH
   environment.localBinInPath = true;
 
-  environment.systemPackages = [
-    inputs.ghostty.packages.${pkgs.stdenv.system}.default
-  ];
+  # environment.systemPackages = [
+  #   inputs.ghostty.packages.${pkgs.stdenv.system}.default
+  # ];
 
   # Since we're using fish as our shell
   programs.fish.enable = true;

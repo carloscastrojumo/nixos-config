@@ -196,9 +196,21 @@ in {
     extraConfig = builtins.readFile ./kitty;
   };
 
+  programs.wezterm = {
+    enable = true;
+    extraConfig = builtins.readFile ./wezterm.lua;
+  };
+
   programs.starship = {
     enable = true;
     enableFishIntegration = true;
+  };
+
+  programs.lazygit = {
+    enable = true;
+    settings = {
+
+    };
   };
 
   programs.atuin = {

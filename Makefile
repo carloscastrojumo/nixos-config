@@ -28,7 +28,7 @@ test:
 cache:
 	nix build '.#nixosConfigurations.$(NIXNAME).config.system.build.toplevel' --json \
 		| jq -r '.[].outputs | to_entries[].value' \
-		| cachix push carloscastro-nixos-config
+		| cachix push mitchellh-nixos-config
 
 # bootstrap a brand new VM. The VM should have NixOS ISO on the CD drive
 # and just set the password of the root user to "root". This will install
